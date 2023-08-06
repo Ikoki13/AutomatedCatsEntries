@@ -1,0 +1,7 @@
+{
+  "token": "bb1d364bc0b2eacb2b2455e7d67202e6",
+  "baseEndpoint": "https://api.track.toggl.com/api/v9/",
+  "taskEndpoint": "workspaces/{}/projects/{}/tasks",
+  "workspaceId": "1199620",
+  "projectId": "1329930"
+}
