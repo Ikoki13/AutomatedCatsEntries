@@ -1,3 +1,5 @@
+import pickle
+
 from Classes.CATsRow import CATsRow
 from ToolApiManager.togglApiManager import TogglApiManager
 from configFileReader import ConfigFileReader
@@ -23,3 +25,8 @@ print("im finished")
 print("write data to CATs")
 
 print("write data to myTE")
+
+file_name = "cats_entries.txt"
+with open(file_name, 'w', encoding="utf-8") as file:
+    file.write(catsRow.__str__())
+    #pickle.dump(catsRow, file)

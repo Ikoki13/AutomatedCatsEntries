@@ -13,3 +13,11 @@ class CATsRow:
                 catsCell = CATsCell()
                 catsCell.addTimeEntry(e)
         self.listOfTimeEntries.append(catsCell)
+
+    def __str__(self):
+        result = ''
+
+        for entry in self.listOfTimeEntries:
+            result = result + entry.__str__() + "\n"
+
+        return result

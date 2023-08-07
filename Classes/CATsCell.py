@@ -9,7 +9,7 @@ class CATsCell:
         self.duration = 0.0
 
     def __str__(self):
-        return "Duration: " + str(self.duration) + "\nText:\n" + self.cellText
+        return "Duration:\n" + str(self.duration) + "\nText:\n" + self.cellText
 
     def addTimeEntry(self, timeEntry):
         result = False
