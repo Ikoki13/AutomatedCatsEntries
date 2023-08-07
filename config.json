@@ -2,5 +2,6 @@
   "tool": "toggl",
   "token": "bb1d364bc0b2eacb2b2455e7d67202e6",
   "workspaceId": "1329930",
-  "projectId": "175175253"
+  "projectId": "175175253",
+  "browser": "chrome"
 }

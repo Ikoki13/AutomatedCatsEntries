@@ -19,3 +19,7 @@ print("items successfully mapped")
 
 catsRow = CATsRow(generalTimeEntries)
 print("im finished")
+
+print("write data to CATs")
+
+print("write data to myTE")
