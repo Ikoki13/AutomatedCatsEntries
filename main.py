@@ -1,3 +1,4 @@
+from Classes.CATsRow import CATsRow
 from ToolApiManager.togglApiManager import TogglApiManager
 from configFileReader import ConfigFileReader
 
@@ -11,4 +12,10 @@ else:
     print("Given tool in config not supported")
 
 print("reading tasks for today")
-filteredTasksFromToday = apiManager.readTasksForToday()
+filteredTasksFromToday = list(apiManager.readTasksForToday())
+print("tasks successfully read - continue mapping")
+generalTimeEntries = apiManager.mapToGeneralTimeEntries(filteredTasksFromToday)
+print("items successfully mapped")
+
+catsRow = CATsRow(generalTimeEntries)
+print("im finished")

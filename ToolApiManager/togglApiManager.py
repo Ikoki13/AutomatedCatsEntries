@@ -2,6 +2,7 @@ from base64 import b64encode
 
 import requests
 
+from Classes.GeneralTimeEntry import GeneralTimeEntry
 from ToolApiManager.baseApiManager import BaseApiManager
 
 
@@ -23,3 +24,10 @@ class TogglApiManager(BaseApiManager):
         print("fetching successful")
         filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
         return filteredTaskList
+
+    def mapToGeneralTimeEntries(self, timeEntryList):
+        result = list()
+
+        for e in timeEntryList:
+            result.append(GeneralTimeEntry(e['description'], e['duration'],e['tags']))
+        return result
