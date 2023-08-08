@@ -15,6 +15,7 @@ class CATsCell:
         result = False
         catsEntry = timeEntry.getCatFormat()
 
+        # TODO wenn ein einziger Eintrag zu lange ist, disen rot raus loggen bzw. Benutzer
         if len(self.cellText) + len(catsEntry) < self.maximumNumberOfCharacters:
             self.cellText = self.cellText + catsEntry + "\n"
             self.duration = self.duration + float(timeEntry.duration/3600)

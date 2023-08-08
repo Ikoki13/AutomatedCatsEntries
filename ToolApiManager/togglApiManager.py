@@ -5,7 +5,6 @@ import requests
 from Classes.GeneralTimeEntry import GeneralTimeEntry
 from ToolApiManager.baseApiManager import BaseApiManager
 
-
 class TogglApiManager(BaseApiManager):
     def __init__(self, workspaceId, projectId, token):
         super().__init__()

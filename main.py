@@ -13,6 +13,8 @@ if(jsonData['tool'] == "toggl"):
 else:
     print("Given tool in config not supported")
 
+# TODO gleiche Tasks aufsummieren und als eine Zeile darstellen
+
 print("reading tasks for today")
 # TODO multi project support (mehrere Arbeitsvorräte)
 filteredTasksFromToday = list(apiManager.readTasksForToday())
