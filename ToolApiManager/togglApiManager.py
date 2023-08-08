@@ -28,5 +28,12 @@ class TogglApiManager(BaseApiManager):
         result = list()
 
         for e in timeEntryList:
-            result.append(GeneralTimeEntry(e['description'], e['duration'],e['tags']))
+            found = False
+            for existing in result:
+                if existing.description == e['description']:
+                    existing.duration += e['duration']
+                    found = True
+                    break
+            if not found:
+                result.append(GeneralTimeEntry(e['description'], e['duration'],e['tags']))
         return result
