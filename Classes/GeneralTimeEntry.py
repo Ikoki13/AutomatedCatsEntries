@@ -13,6 +13,8 @@ class GeneralTimeEntry:
     def getCatFormat(self):
         result = self.description
 
+        # TODO Tag matching case insensitive machen
+        # TODO Stunden auf 2 Kommastellen und 15 Minuten Blöcke formattieren
         if 'Termin' in self.tags:
             result = str(float(self.duration/3600)) + "h Teilnahme Termin '" + result + "'"
         elif 'Vorbereitung' in self.tags:
@@ -21,6 +23,8 @@ class GeneralTimeEntry:
             result = "Nachbereitung '" + result + "'"
         elif 'Protokoll' in self.tags:
             result = "Erstellung Protokoll für '" + result + "'"
+        elif 'Entwicklung' in self.tags:
+            result = "Entwicklung von " + result
 
         return result
 

@@ -14,6 +14,7 @@ else:
     print("Given tool in config not supported")
 
 print("reading tasks for today")
+# TODO multi project support (mehrere Arbeitsvorräte)
 filteredTasksFromToday = list(apiManager.readTasksForToday())
 print("tasks successfully read - continue mapping")
 generalTimeEntries = apiManager.mapToGeneralTimeEntries(filteredTasksFromToday)

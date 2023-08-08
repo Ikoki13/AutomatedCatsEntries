@@ -82,22 +82,22 @@ driver.get(
     "https://resources.portal.at/appcall_registration/?appid=PRM&portal=FP2&appurl=https://prm2pj.portal.at/SSOREDIRECT/REDIRECT.JSP?TO=HTTPS://PRM2PA.PORTAL.AT/nwbc")
 
 driver.find_element(By.LINK_TEXT, 'Alternative Anmeldemethoden').click()
-time.sleep(1)
+time.sleep(2)
 
 # select id austria
 driver.find_element(By.ID, 'startIdAustria').click()
-time.sleep(1)
+time.sleep(2)
 
 # select id austria again
 driver.find_element(By.ID, 'buttonEid').click()
-time.sleep(1)
+time.sleep(2)
 
 # insert values for id austria
 
 driver.switch_to.frame(1)
 print("todo - save mobile number and password safely")
-driver.find_element(By.ID, "firstFactorId").send_keys("mobile_number")
-driver.find_element(By.ID, "signaturpasswort").send_keys("mobile_password")
+driver.find_element(By.ID, "firstFactorId").send_keys("phone_no")
+driver.find_element(By.ID, "signaturpasswort").send_keys("signature_password")
 driver.find_element(By.ID, "signaturpasswort").send_keys(Keys.ENTER)
 time.sleep(15)
 driver.switch_to.default_content()
@@ -106,7 +106,7 @@ time.sleep(5)
 
 # select "Startseite" menu entry
 driver.find_element(By.ID, "shellAppTitle-button").click()
-time.sleep(1)
+time.sleep(2)
 # select "cats erfassen"
 driver.find_element(By.ID, "__label0-allMyAppsView--oItemsContainerlist-0-bdi").click()
 time.sleep(10)
@@ -117,17 +117,17 @@ noOfTheWeek = datetime.now().weekday()
 # "Nächste Periode" Button
 # driver.find_element(By.ID, "WD017C").click()
 
-# match noOfTheWeek:
-#    case 1:
-createArbeitsvorrateAndLeistungsarten(driver)
-createBookingsForDay(driver, mondayConfig)
-#    case 2:
-createBookingsForDay(driver, tuesdayConfig)
-#    case 3:
-createBookingsForDay(driver, wednesdayConfig)
-#    case 4:
-createBookingsForDay(driver, thursdayConfig)
-#    case 5:
-createBookingsForDay(driver, fridayConfig)
+match noOfTheWeek:
+    case 1:
+        createArbeitsvorrateAndLeistungsarten(driver)
+        createBookingsForDay(driver, mondayConfig)
+    case 2:
+        createBookingsForDay(driver, tuesdayConfig)
+    case 3:
+        createBookingsForDay(driver, wednesdayConfig)
+    case 4:
+        createBookingsForDay(driver, thursdayConfig)
+    case 5:
+        createBookingsForDay(driver, fridayConfig)
 
 

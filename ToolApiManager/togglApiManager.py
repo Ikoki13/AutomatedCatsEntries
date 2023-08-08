@@ -15,8 +15,9 @@ class TogglApiManager(BaseApiManager):
 
     def readTasksForToday(self):
         print("fetching tasks from today")
-        print("todo - add today as parameter and not make it hard coded")
-        print("todo - make token variable from config")
+        # TODO add today as parameter and not make it hard coded
+        # TODO make token variable from config
+        # TODO filter current running taks (duration is negative)
         response = requests.get("https://api.track.toggl.com/api/v9/me/time_entries?start_date={}&end_date={}".format(
             "2023-08-07T00:00:00.00Z", "2023-08-07T23:59:59.99Z"),
                                 headers={'Authorization': 'Basic %s' % b64encode(
