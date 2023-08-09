@@ -22,18 +22,22 @@ class TogglApiManager(BaseApiManager):
                                     self.token.encode()).decode("ascii")})
         print("fetching successful")
         filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
-        return filteredTaskList
+        mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
+        return mergedTasks
+    
+    def mergeDuplicatedTasks(self, tasks):
+        merged = {}
+        for task in tasks:
+            description = task['description']
+            if description in merged: 
+                merged[description]['duration'] += task['duration']
+            else: 
+                merged[description] = task
+        return list(merged.values())
 
     def mapToGeneralTimeEntries(self, timeEntryList):
         result = list()
 
         for e in timeEntryList:
-            found = False
-            for existing in result:
-                if existing.description == e['description']:
-                    existing.duration += e['duration']
-                    found = True
-                    break
-            if not found:
-                result.append(GeneralTimeEntry(e['description'], e['duration'],e['tags']))
+            result.append(GeneralTimeEntry(e['description'], e['duration'], e['tags']))
         return result
