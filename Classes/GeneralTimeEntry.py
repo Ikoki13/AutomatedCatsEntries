@@ -1,3 +1,5 @@
+import math
+
 class GeneralTimeEntry:
     duration = 0
     tags = []
@@ -12,11 +14,9 @@ class GeneralTimeEntry:
 
     def getCatFormat(self):
         result = self.description
-
         # TODO Tag matching case insensitive machen
-        # TODO Stunden auf 2 Kommastellen und 15 Minuten Blöcke formattieren
         if 'Termin' in self.tags:
-            result = str(float(self.duration/3600)) + "h Teilnahme Termin '" + result + "'"
+            result = self.formatSecondsToQuarterlyHours(self.duration) + "h Teilnahme Termin '" + result + "'"
         elif 'Vorbereitung' in self.tags:
             result = "Vorbereitung '" + result + "'"
         elif 'Nachbereitung' in self.tags:
@@ -28,6 +28,11 @@ class GeneralTimeEntry:
 
         return result
 
+    def formatSecondsToQuarterlyHours(self, seconds):
+        quarter_hours = round(seconds / 900)
+        if quarter_hours == 0: 
+            quarter_hours = 1
+        return str(quarter_hours / 4)
 
 
 
