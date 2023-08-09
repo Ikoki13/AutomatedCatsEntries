@@ -11,7 +11,7 @@ class TogglApiManager(BaseApiManager):
         super().__init__()
         self.workspaceId = int(workspaceId)
         self.projectId = int(projectId)
-        self.token = token
+        self.token = token + ":api_token"
 
     def readTasksForToday(self):
         print("fetching tasks from today")
@@ -20,15 +20,26 @@ class TogglApiManager(BaseApiManager):
         # TODO make token variable from config
         response = requests.get("https://api.track.toggl.com/api/v9/me/time_entries?start_date={}&end_date={}".format(startDatetime, endDatetime),
                                 headers={'Authorization': 'Basic %s' % b64encode(
-                                    b"bb1d364bc0b2eacb2b2455e7d67202e6:api_token").decode("ascii")})
+                                    self.token.encode()).decode("ascii")})
         print("fetching successful")
         # TODO filter current running taks (duration is negative)
         filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
-        return filteredTaskList
+        mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
+        return mergedTasks
+    
+    def mergeDuplicatedTasks(self, tasks):
+        merged = {}
+        for task in tasks:
+            description = task['description']
+            if description in merged: 
+                merged[description]['duration'] += task['duration']
+            else: 
+                merged[description] = task
+        return list(merged.values())
 
     def mapToGeneralTimeEntries(self, timeEntryList):
         result = list()
 
         for e in timeEntryList:
-            result.append(GeneralTimeEntry(e['description'], e['duration'],e['tags']))
+            result.append(GeneralTimeEntry(e['description'], e['duration'], e['tags']))
         return result
