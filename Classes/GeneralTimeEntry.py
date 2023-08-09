@@ -1,5 +1,3 @@
-import math
-
 class GeneralTimeEntry:
     duration = 0
     tags = []
