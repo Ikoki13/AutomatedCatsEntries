@@ -28,17 +28,17 @@ class TogglApiManager(BaseApiManager):
         return mergedTasks
     
     def mergeDuplicatedTasks(self, tasks):
-        merged_tasks = list()
+        merged_tasks = {}
         for task in tasks:
-            found = False
-            for merged_task in merged_tasks:
-                if merged_task['description'] == task['description'] and merged_task['tags'] == task['tags']: 
-                    merged_task['duration'] += task['duration']
-                    found = True
-                    break
-            if not found:
-                merged_tasks.append(task)
-        return merged_tasks
+            key = (task['description'], tuple(task['tags']))
+            if key in merged_tasks: 
+                merged_tasks[key]['duration'] += task['duration']
+                    
+            else:
+                merged_tasks[key] = task
+
+        merged_list = list(merged_tasks.values())
+        return merged_list
 
     def mapToGeneralTimeEntries(self, timeEntryList):
         result = list()
