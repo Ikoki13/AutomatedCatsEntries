@@ -11,18 +11,19 @@ class GeneralTimeEntry:
         print("Description: " + self.description + ", Duration: " + str(self.duration) + ", Tags: " + str(self.tags))
 
     def getCatFormat(self):
-        result = self.description
-        # TODO Tag matching case insensitive machen
-        if 'Termin' in self.tags:
+        result = self.description           
+        lowerCaseTags = list(map(lambda t:t.lower(), self.tags))
+        
+        if 'termin' in lowerCaseTags:
             result = self.formatSecondsToQuarterlyHours(self.duration) + "h Teilnahme Termin '" + result + "'"
-        elif 'Vorbereitung' in self.tags:
+        elif 'vorbereitung' in lowerCaseTags:
             result = "Vorbereitung '" + result + "'"
-        elif 'Nachbereitung' in self.tags:
+        elif 'nachbereitung' in lowerCaseTags:
             result = "Nachbereitung '" + result + "'"
-        elif 'Protokoll' in self.tags:
+        elif 'protokoll' in lowerCaseTags:
             result = "Erstellung Protokoll für '" + result + "'"
-        elif 'Entwicklung' in self.tags:
-            result = "Entwicklung von " + result
+        elif 'entwicklung' in lowerCaseTags:
+            result = "Entwicklung " + result
 
         return result
 
