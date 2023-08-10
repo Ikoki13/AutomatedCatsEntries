@@ -37,7 +37,6 @@ def createArbeitsvorrateAndLeistungsarten(driver):
     driver.find_element(By.ID, "WD038C").send_keys(Keys.ENTER)
     # driver.find_element(By.ID, "WD031A").send_keys(Keys.DOWN)
 
-
 # Monday
 mondayConfig = {'hoursFieldList': ["WD021A", "WD025F", "WD02A4", "WD02E7"],
                 'detailsFieldList': ["WD021E", "WD0263", "WD02A8", "WD064D"],
@@ -61,8 +60,8 @@ thursdayConfig = {'hoursFieldList': ["WD0232", "WD0277", "WD02BC", "WD02F9"],
 # Friday
 fridayConfig = {'hoursFieldList': ["WD023A", "WD027F", "WD02C4", "WD02FF"],
                 'detailsFieldList': ["WD023E", "WD0283", "WD02C8", "WD0659"],
-                'textAreaFieldList': ["", "", "", ""],  # TODO fill with values
-                'okButtonFieldList': ["", "", "", ""]} # TODO fill with values
+                'textAreaFieldList': ["WD0586", "WD0CD2", "WD0E92", "WD1052"],
+                'okButtonFieldList': ["WD0588", "WD0CD4", "WD0E94", "WD1054"]}
 
 def createBookingsForDay(driver, dayConfig):
     for field in dayConfig['hoursFieldList']:
@@ -77,7 +76,8 @@ def createBookingsForDay(driver, dayConfig):
         driver.find_element(By.ID, dayConfig['textAreaFieldList'][i]).send_keys("text for text area")
         driver.find_element(By.ID, dayConfig['okButtonFieldList'][i]).click()
 
-driver = webdriver.Firefox()
+# driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 driver.get(
     "https://resources.portal.at/appcall_registration/?appid=PRM&portal=FP2&appurl=https://prm2pj.portal.at/SSOREDIRECT/REDIRECT.JSP?TO=HTTPS://PRM2PA.PORTAL.AT/nwbc")
 
@@ -90,14 +90,14 @@ time.sleep(2)
 
 # select id austria again
 driver.find_element(By.ID, 'buttonEid').click()
-time.sleep(2)
+time.sleep(3)
 
 # insert values for id austria
 
-driver.switch_to.frame(1)
+driver.switch_to.frame(0)
 print("todo - save mobile number and password safely")
-driver.find_element(By.ID, "firstFactorId").send_keys("phone_no")
-driver.find_element(By.ID, "signaturpasswort").send_keys("signature_password")
+driver.find_element(By.ID, "firstFactorId").send_keys("mobile_no")
+driver.find_element(By.ID, "signaturpasswort").send_keys("password")
 driver.find_element(By.ID, "signaturpasswort").send_keys(Keys.ENTER)
 time.sleep(15)
 driver.switch_to.default_content()
