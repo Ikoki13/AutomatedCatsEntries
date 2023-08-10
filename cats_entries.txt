@@ -1,30 +1,29 @@
 Duration:
-4.0
+3.0
 Text:
-Nachbereitung 'Portfolioüberbreifende Abstimmung'
 Nachbereitung '[BMF] VLG: Status Update [intern] & OneBoard'
 0.5h Teilnahme Termin 'Vorstellung BMF und Kennenlernen'
-
-Duration:
-2.0
-Text:
 0.5h Teilnahme Termin '[BMF] VLG: Status Update [intern] & OneBoard'
-1.0h Teilnahme Termin '[BMF] VLG: Status Update [intern] & OneBoard'
-0.5h Teilnahme Termin 'PO Abnahme 3'
 
 Duration:
 3.5
 Text:
+1.0h Teilnahme Termin '[BMF] VLG: Status Update [intern] & OneBoard'
+0.5h Teilnahme Termin 'PO Abnahme 3'
 Nachbereitung 'Architektur Gateway / Service Mesh'
 1.0h Teilnahme Termin 'Architektur Gateway / Service Mesh'
-Vorbereitung 'Architektur Gateway / Service Mesh'
-0.25h Teilnahme Termin '[BMF] - Operatives Daily'
 
 Duration:
-3.486666666666667
+4.0
 Text:
+Vorbereitung 'Architektur Gateway / Service Mesh'
+0.25h Teilnahme Termin '[BMF] - Operatives Daily'
 2.0h Teilnahme Termin '[VLG] Technisches Refinement'
 0.5h Teilnahme Termin 'Review Automatisierungspotential VLG'
+
+Duration:
+0.9866666666666667
+Text:
 0.5h Teilnahme Termin 'Dailies'
 Vorbereitung '[VLG] Technisches Refinement'
 
