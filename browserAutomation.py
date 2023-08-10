@@ -65,6 +65,8 @@ fridayConfig = {'hoursFieldList': ["WD023A", "WD027F", "WD02C4", "WD02FF"],
 
 def createBookingsForDay(driver, dayConfig):
     for field in dayConfig['hoursFieldList']:
+        driver.find_element(By.ID, field).click()
+        time.sleep(0.5)
         driver.find_element(By.ID, field).send_keys("1")  # .click()
 
     # Prüfen Button
@@ -95,8 +97,8 @@ time.sleep(3)
 # insert values for id austria
 
 driver.switch_to.frame(0)
-print("todo - save mobile number and password safely")
-driver.find_element(By.ID, "firstFactorId").send_keys("mobile_no")
+# TODO save mobile number and password safely
+driver.find_element(By.ID, "firstFactorId").send_keys("+phone_no")
 driver.find_element(By.ID, "signaturpasswort").send_keys("password")
 driver.find_element(By.ID, "signaturpasswort").send_keys(Keys.ENTER)
 time.sleep(15)
@@ -118,16 +120,16 @@ noOfTheWeek = datetime.now().weekday()
 # driver.find_element(By.ID, "WD017C").click()
 
 match noOfTheWeek:
-    case 1:
+    case 0:
         createArbeitsvorrateAndLeistungsarten(driver)
         createBookingsForDay(driver, mondayConfig)
-    case 2:
+    case 1:
         createBookingsForDay(driver, tuesdayConfig)
-    case 3:
+    case 2:
         createBookingsForDay(driver, wednesdayConfig)
-    case 4:
+    case 3:
         createBookingsForDay(driver, thursdayConfig)
-    case 5:
+    case 4:
         createBookingsForDay(driver, fridayConfig)
 
 
