@@ -1,5 +1,7 @@
 import pickle
+from datetime import date
 
+from Classes.CATsHandler import CATsHandler
 from Classes.CATsRow import CATsRow
 from ToolApiManager.togglApiManager import TogglApiManager
 from configFileReader import ConfigFileReader
@@ -25,7 +27,7 @@ print("items successfully mapped")
 catsRow = CATsRow(generalTimeEntries)
 print("im finished")
 
-print("write data to CATs")
+
 
 print("write data to myTE")
 
@@ -33,3 +35,13 @@ file_name = "cats_entries.txt"
 with open(file_name, 'w', encoding="utf-8") as file:
     file.write(catsRow.__str__())
     #pickle.dump(catsRow, file)
+
+print("write data to cats")
+catsHandler = CATsHandler(jsonData["leistungsart"])
+
+catsHandler.signIntoCATS()
+
+catsHandler.moveToCATsCaptureViaMenu()
+
+# TODO use dynamic date
+catsHandler.createBookings(date.today(), catsRow)
