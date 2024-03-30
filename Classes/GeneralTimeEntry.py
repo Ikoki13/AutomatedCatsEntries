@@ -13,7 +13,7 @@ class GeneralTimeEntry:
     def getCatFormat(self):
         result = self.description           
         lowerCaseTags = list(map(lambda t:t.lower(), self.tags))
-        
+
         if 'termin' in lowerCaseTags:
             result = self.formatSecondsToQuarterlyHours(self.duration) + "h Teilnahme Termin '" + result + "'"
         elif 'vorbereitung' in lowerCaseTags:
@@ -24,6 +24,8 @@ class GeneralTimeEntry:
             result = "Erstellung Protokoll für '" + result + "'"
         elif 'entwicklung' in lowerCaseTags:
             result = "Entwicklung " + result
+        elif 'analyse' in lowerCaseTags:
+            result = "Analyse " + result
 
         return result
 
