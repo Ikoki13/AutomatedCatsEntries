@@ -1,29 +1,41 @@
+import json
 from Classes.CATsCell import CATsCell
 
 class CATsRow:
     def __init__(self, timeEntries):
         self.listOfTimeEntries = []
 
-        # Zwei Listen für unterschiedliche Eintragstypen: Termine und Nicht-Termine
-        terminEntries = [e for e in timeEntries if 'termin' in [tag.lower() for tag in e.tags]]
-        nonTerminEntries = [e for e in timeEntries if 'termin' not in [tag.lower() for tag in e.tags]]
+        # Einlesen der Konfiguration
+        with open('config.json', 'r') as configFile:
+            config = json.load(configFile)
+        useSingleBlockForAllEntries = config.get('useSingleBlockForAllEntries', False)
+
+        # Anwenden der Konfiguration
+        if useSingleBlockForAllEntries:
+            # Füge alle Einträge in einem einzigen Block hinzu
+            self.listOfTimeEntries.extend(self.addEntriesToCATsCells(timeEntries))
+        else:
+            # Trenne Termine und Nicht-Termine in verschiedene Blöcke
+            terminEntries = [e for e in timeEntries if 'termin' in [tag.lower() for tag in e.tags]]
+            nonTerminEntries = [e for e in timeEntries if 'termin' not in [tag.lower() for tag in e.tags]]
+
+            self.listOfTimeEntries.extend(self.addEntriesToCATsCells(terminEntries))
+            self.listOfTimeEntries.extend(self.addEntriesToCATsCells(nonTerminEntries))
 
         # Funktion zum Hinzufügen von Einträgen in CATsCell unter Berücksichtigung der Zeichenbegrenzung
-        def addEntriesToCATsCells(entries):
-            cells = []
-            currentCell = CATsCell()
-            for entry in entries:
-                if not currentCell.addTimeEntry(entry):
-                    cells.append(currentCell)
-                    currentCell = CATsCell()
-                    currentCell.addTimeEntry(
-                        entry)  # Wir nehmen an, dass ein einzelner Eintrag nicht die Maximalgröße überschreitet
-            cells.append(currentCell)  # Füge die letzte CATsCell hinzu
-            return cells
+    def addEntriesToCATsCells(self, entries):
+        cells = []
+        currentCell = CATsCell()
+        for entry in entries:
+            if not currentCell.addTimeEntry(entry):
+                cells.append(currentCell)
+                currentCell = CATsCell()
+                currentCell.addTimeEntry(entry)  # Wir nehmen an, dass ein einzelner Eintrag nicht die Maximalgröße überschreitet
+        cells.append(currentCell)  # Füge die letzte CATsCell hinzu
 
-        # Termineinträge und Nicht-Termineinträge in getrennten Blöcken hinzufügen
-        self.listOfTimeEntries.extend(addEntriesToCATsCells(terminEntries))
-        self.listOfTimeEntries.extend(addEntriesToCATsCells(nonTerminEntries))
+        if not cells[-1].cellText:
+                cells.pop()
+        return cells
 
     def __str__(self):
         result = ''

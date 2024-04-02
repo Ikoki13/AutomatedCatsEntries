@@ -36,44 +36,33 @@ To setup the tool, change the config.json file in the main repository:
 
 Diese Aktualisierung der CATsRow-Klasse ermöglicht es, Zeiteinträge effizient in Blöcken zu organisieren, wobei Termineinträge gesondert behandelt werden. Termineinträge können zusammen in einem Block erscheinen, solange die maximale Zeichenanzahl des Blocks nicht überschritten wird. Nicht-Termin-Einträge werden ebenfalls in Blöcken gruppiert, dürfen aber nicht mit Termin-Einträgen in einem Block gemischt werden. Dies sorgt für eine klar strukturierte und übersichtliche Ausgabe in der generierten TXT-Datei.
 
-### Funktionsweise
+## Feature-Toggle für die Behandlung von Zeiteinträgen - 02.04.2024
 
-Die CATsRow-Klasse trennt Termineinträge von anderen Eintragstypen und fügt sie in CATsCell-Instanzen ein, wobei die maximale Zeichenbegrenzung jeder Zelle berücksichtigt wird. Hierbei werden zwei Schritte durchgeführt:
+In unserer Anwendung haben wir einen Feature-Toggle implementiert, der es ermöglicht, das Verhalten bei der Verarbeitung und Gruppierung von Zeiteinträgen dynamisch zu steuern. Dieser Toggle wird über unsere Konfigurationsdatei (`config.json`) gesteuert und bietet Flexibilität in der Darstellung und Handhabung der Zeiteinträge.
 
-Trennung der Einträge: Zeiteinträge werden basierend auf ihren Tags in Termineinträge und Nicht-Termin-Einträge unterteilt.
-Blockbildung: Termineinträge werden zuerst in Blöcke eingefügt, gefolgt von Nicht-Termin-Einträgen. Jeder Block versucht, so viele Einträge wie möglich aufzunehmen, ohne die maximale Zeichenbegrenzung zu überschreiten.
-Implementierung
+### Konfiguration
+Der Toggle wird durch den Schlüssel `useSingleBlockForAllEntries` in der `config.json`-Datei gesteuert. Er akzeptiert einen booleschen Wert (`true` oder `false`):
 
-```
-from .CATsCell import CATsCell
+- `true`: Alle Zeiteinträge werden in einem einzigen Block zusammengefasst, ohne Unterscheidung zwischen verschiedenen Typen von Einträgen.
 
-class CATsRow:
-    def __init__(self, timeEntries):
-        self.listOfTimeEntries = []
-        # Trennung der Einträge in Termine und Nicht-Termine
-        terminEntries = [e for e in timeEntries if 'termin' in [tag.lower() for tag in e.tags]]
-        nonTerminEntries = [e for e in timeEntries if 'termin' not in [tag.lower() for tag in e.tags]]
+- `false`: Zeiteinträge werden basierend auf ihren Tags in unterschiedliche Blöcke gruppiert. Einträge mit dem Tag `termin` werden separat von anderen Einträgen behandelt, um eine klare Unterscheidung und Strukturierung zu gewährleisten.
 
-        # Hinzufügen der Einträge zu CATsCells
-        self.listOfTimeEntries.extend(self.addEntriesToCATsCells(terminEntries))
-        self.listOfTimeEntries.extend(self.addEntriesToCATsCells(nonTerminEntries))
+### Anwendung des Toggles
+Der Toggle wird beim Initialisieren der `CATsRow`-Klasse berücksichtigt. Basierend auf dem Wert von useSingleBlockForAllEntries wählt die Klasse die entsprechende Logik zur Gruppierung der Zeiteinträge:
 
-    def addEntriesToCATsCells(self, entries):
-        cells = []
-        currentCell = CATsCell()
-        for entry in entries:
-            if not currentCell.addTimeEntry(entry):
-                cells.append(currentCell)
-                currentCell = CATsCell()
-                currentCell.addTimeEntry(entry)
-        if currentCell.cellText:  # Vermeide das Hinzufügen leerer Zellen
-            cells.append(currentCell)
-        return cells
+1. **Einzelblock-Modus (`useSingleBlockForAllEntries` ist `true`):** In diesem Modus werden alle Zeiteinträge, unabhängig von ihren Tags, in einem einzigen Block zusammengefasst. Dies vereinfacht die Darstellung, indem es die Unterscheidung zwischen verschiedenen Arten von Aktivitäten (wie Termine, Entwicklung, Analyse etc.) ignoriert.
+2. **Getrennte Blöcke (`useSingleBlockForAllEntries` ist `false`):** In diesem Modus werden Zeiteinträge sorgfältig nach ihren Tags gruppiert. Einträge mit dem Tag `termin` werden von anderen Aktivitätstypen getrennt, um eine klare visuelle und organisatorische Trennung in der Ausgabe zu gewährleisten.
 
-    def __str__(self):
-        result = ''
-        for entry in self.listOfTimeEntries:
-            result += str(entry) + "\n"
-        return result
-```
-Diese Implementierung stellt sicher, dass Termineinträge nicht mit anderen Eintragsarten gemischt werden und somit eine klare Unterscheidung in der Ausgabe ermöglicht wird.
+### Beispiel `config.json`
+````
+{
+  "tool": "toggl",
+  "token": "564280678bc42ea1203e73ce107cb244",
+  "workspaceId": "7596813",
+  "projectId": "195060378",
+  "browser": "chrome",
+  "leistungsart": "BXACIB",
+  "useSingleBlockForAllEntries": false
+}
+````
+Durch Anpassen des Werts von `useSingleBlockForAllEntries` in der Konfigurationsdatei können Entwickler und Nutzer das Verhalten der Anwendung leicht ändern, um ihren spezifischen Anforderungen gerecht zu werden.

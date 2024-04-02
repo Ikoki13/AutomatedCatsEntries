@@ -4,5 +4,6 @@
   "workspaceId": "7596813",
   "projectId": "195060378",
   "browser": "chrome",
-  "leistungsart": "BXACIB"
+  "leistungsart": "BXACIB",
+  "useSingleBlockForAllEntries": false
 }
