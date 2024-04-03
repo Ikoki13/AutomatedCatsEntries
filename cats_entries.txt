@@ -1,12 +1,21 @@
 Duration:
-0.0
+4.0
 Text:
+1.0h Teilnahme Termin 'VLG: Anpassung Sprint Commitment'
+0.5h Teilnahme Termin 'VLG Teamabstimmung'
+1.0h Teilnahme Termin 'VLG: Abstimmung Vorgehen Übergabe'
+1.5h Teilnahme Termin '[VLG] Teapots Refinement'
 
 Duration:
-0.0
+2.5
 Text:
+1.0h Teilnahme Termin 'VLG: Fragen zur EST Berechnung'
+0.5h Teilnahme Termin 'VLG: Abstimmung Analyse Committment - Cookies und Teapots'
+1.0h Teilnahme Termin '[VLG] Sprint Planning'
 
 Duration:
-0.0
+4.0
 Text:
+Tätigkeit
+Analyse Feature - Einkünfte aus Kapitalvermögen
 
