@@ -1,18 +1,18 @@
 from Classes.CATsCell import CATsCell
-from configFileApp import ConfigFileApp
+from configFileReader import ConfigFileReader
 
 
 class CATsRow:
     def __init__(self, timeEntries):
         self.listOfTimeEntries = []
 
-        fileConfig = ConfigFileApp('userConfig.json')
+        fileConfig = ConfigFileReader("config.json")
         fileConfig.readConfigFile()
         jsonData = fileConfig.fileContent
-        useSingleBlockForAllEntriesEnabled = jsonData.get('useSingleBlockForAllEntriesEnabled', True)
+        useSingleBlockForAllEntries = jsonData['useSingleBlockForAllEntries']
 
         # Anwenden der Konfiguration
-        if useSingleBlockForAllEntriesEnabled:
+        if useSingleBlockForAllEntries:
             # Füge alle Einträge in einem einzigen Block hinzu
             self.listOfTimeEntries.extend(self.addEntriesToCATsCells(timeEntries))
         else:
