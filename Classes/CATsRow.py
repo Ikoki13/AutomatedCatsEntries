@@ -1,11 +1,14 @@
 from Classes.CATsCell import CATsCell
+from configFileReader import ConfigFileReader
 
 
 class CATsRow:
     def __init__(self, timeEntries):
         self.listOfTimeEntries = []
 
-        from main import jsonData
+        fileConfig = ConfigFileReader("config.json")
+        fileConfig.readConfigFile()
+        jsonData = fileConfig.fileContent
         useSingleBlockForAllEntries = jsonData['useSingleBlockForAllEntries']
 
         # Anwenden der Konfiguration
