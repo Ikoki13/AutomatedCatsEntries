@@ -20,11 +20,15 @@ configFile.readConfigFile()
 configFileData = configFile.fileContent
 currentVersion = configFileData.get('version')
 
+print("CurrentVersion: {}".format(currentVersion))
+
 if autoUpdaterEnabled:
     updater = Updater()
     updateURL = updater.checkForUpdates(currentVersion)
     if updateURL:
         updater.downloadAndInstallUpdate(updateURL)
+    else:
+        print("No updates found. You use the latest version.")
 else:
     print("AutoUpdater is not enabled.")
     exit()
