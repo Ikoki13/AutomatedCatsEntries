@@ -5,11 +5,33 @@ from datetime import datetime, date
 
 from Classes.CATsRow import CATsRow
 from ToolApiManager.togglApiManager import TogglApiManager
-from configFileReader import ConfigFileReader
+from configFileApp import ConfigFileApp
+from Classes.updater import Updater
 
-fileConfig = ConfigFileReader("config.json")
+# Lade userConfig.json
+fileConfig = ConfigFileApp('userConfig.json')
 fileConfig.readConfigFile()
 jsonData = fileConfig.fileContent
+autoUpdaterEnabled = jsonData.get('autoUpdater', True)
+
+# Lade config.json
+configFile = ConfigFileApp('config.json')
+configFile.readConfigFile()
+configFileData = configFile.fileContent
+currentVersion = configFileData.get('version')
+
+print("CurrentVersion: {}".format(currentVersion))
+
+if autoUpdaterEnabled:
+    updater = Updater()
+    updateURL = updater.checkForUpdates(currentVersion)
+    if updateURL:
+        updater.downloadAndInstallUpdate(updateURL)
+    else:
+        print("No updates found. You use the latest version.")
+else:
+    print("AutoUpdater is not enabled.")
+    exit()
 
 inputDate = input("Please input date [dd.mm.YYYY] or no date for today: ")
 # giving the date format
