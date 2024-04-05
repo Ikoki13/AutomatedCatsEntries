@@ -5,6 +5,6 @@
   "projectId": "195060378",
   "browser": "chrome",
   "leistungsart": "BXACIB",
-  "useSingleBlockForAllEntriesEnabled": false,
+  "useSingleBlockForAllEntriesEnabled": true,
   "autoUpdaterEnabled": true
 }
