@@ -16,7 +16,6 @@ class Updater:
             # Korrektur: Zugriff auf die Download-URL des ersten Assets
             downloadURL = response_json['zipball_url']
             return downloadURL
-            return latestVersion
         return None
 
     def downloadAndInstallUpdate(self, downloadURL, latestversion):
