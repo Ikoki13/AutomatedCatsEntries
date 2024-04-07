@@ -26,8 +26,6 @@ class CATsCell:
             logging.info(f"Nicht genug Platz für den gesamten Eintrag.")
         return result
 
-# Testing der Zeichenbegrenzung mit folgendem Text:
+# Testing der Zeichenbegrenzung mit folgendem Text (222 Zeichen):
 #
 #Every morning, we are given the chance to create our own story. Today, embrace the possibilities, face challenges with courage, and find joy in the smallest moments. Your journey is unique; make it memorable and impactful.
-#
-# 222 Zeichen - Danke ChatGPT-4
