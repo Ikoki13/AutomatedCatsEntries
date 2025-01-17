@@ -16,9 +16,6 @@ class GeneralTimeEntry:
         lowerCaseTags = list(map(lambda t:t.lower(), self.tags))
         milestone = self.getFirstTagStartingWithM(lowerCaseTags).upper()
 
-        # format for entry
-        # <time>h <mileston> <Doing>
-
         # find description
         if 'termin' in lowerCaseTags:
             description = "Teilnahme Termin '" + self.description + "'"
