@@ -96,7 +96,7 @@ time.sleep(3)
 
 driver.switch_to.frame(0)
 print("todo - save mobile number and password safely")
-driver.find_element(By.ID, "firstFactorId").send_keys("mobile_no")
+driver.find_element(By.ID, "firstFactorId").send_keys("mobile")
 driver.find_element(By.ID, "signaturpasswort").send_keys("password")
 driver.find_element(By.ID, "signaturpasswort").send_keys(Keys.ENTER)
 time.sleep(15)
