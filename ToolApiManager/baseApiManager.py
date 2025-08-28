@@ -1,5 +1,5 @@
 class BaseApiManager:
-    def readTasksForToday(self):
+    def readTasksForDates(self):
         raise NotImplementedError("Subclass must implement this method")
 
     def mapToGeneralTimeEntries(self, timeEntries):

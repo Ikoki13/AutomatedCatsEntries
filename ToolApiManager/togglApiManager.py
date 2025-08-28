@@ -16,11 +16,10 @@ class TogglApiManager(BaseApiManager):
         self.startDate = startDate
         self.endDate = endDate
 
-    def readTasksForToday(self):
+    def readTasksForDates(self):
         print("fetching for {}".format(self.startDate))
         apiToken = self.token + ":api_token"
 
-        # TODO filter current running taks (duration is negative) (done ;))
         response = requests.get(
             "https://api.track.toggl.com/api/v9/me/time_entries?start_date={}&end_date={}".format(
                 self.startDate, self.endDate
@@ -33,6 +32,30 @@ class TogglApiManager(BaseApiManager):
             },
         )
         print("fetching successful")
+        filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
+        mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
+        return mergedTasks
+
+    def readTasksForMonth(self, month, year):
+        # Calculate first and last day of the month
+        first_day = datetime(year, month, 1)
+        last_day = datetime(year, month, calendar.monthrange(year, month)[1])
+
+        # Format dates as ISO 8601
+        start_date = first_day.strftime("%Y-%m-%dT00:00:00+00:00")
+        end_date = last_day.strftime("%Y-%m-%dT23:59:59+00:00")
+
+        print(f"Fetching for month: {month}/{year} ({start_date} to {end_date})")
+        apiToken = self.token + ":api_token"
+
+        response = requests.get(
+            f"https://api.track.toggl.com/api/v9/me/time_entries?start_date={start_date}&end_date={end_date}",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Basic %s" % b64encode(apiToken.encode("utf-8")).decode("ascii")
+            },
+        )
+        print("Fetching successful")
         filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
         mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
         return mergedTasks
