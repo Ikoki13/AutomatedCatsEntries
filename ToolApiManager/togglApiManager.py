@@ -1,4 +1,6 @@
+import calendar
 from base64 import b64encode
+from datetime import datetime
 
 import requests
 import json
@@ -28,12 +30,13 @@ class TogglApiManager(BaseApiManager):
                 "Content-Type": "application/json",
                 "Authorization": "Basic %s"
                 % b64encode(apiToken.encode("utf-8")).decode("ascii")
-
             },
         )
         print("fetching successful")
-        filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
-        mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
+        if(response.ok):
+            filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
+            mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
+
         return mergedTasks
 
     def readTasksForMonth(self, month, year):

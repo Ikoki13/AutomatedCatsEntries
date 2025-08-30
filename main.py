@@ -16,7 +16,7 @@ def get_first_and_last_date_of_month_full(given_datetime):
     first_day = datetime(year, month, 1, 0, 0, 0)
     last_day_num = calendar.monthrange(year, month)[1]
     last_day = datetime(year, month, last_day_num, 23, 59, 59)
-    return first_day, last_day
+    return first_day.date(), last_day.date()
 
 fileConfig = ConfigFileReader("config.json")
 fileConfig.readConfigFile()
@@ -29,6 +29,8 @@ if len(sys.argv) == 2 and sys.argv[1] in  ("-t", "--today"):
 elif len(sys.argv) == 2 and sys.argv[1] in ("-m", "--month"):
     startDate, endDate = get_first_and_last_date_of_month_full(date.today())
 else:
+    startDate, endDate = get_first_and_last_date_of_month_full(date.today())
+"""
     inputDate = input("Please input date [dd.mm.YYYY] or no date for today: ")
     # giving the date format
     date_format = "%d.%m.%Y"
@@ -44,8 +46,7 @@ else:
         print("Using today: " + date.today().strftime("%Y-%m-%dT00:00:00Z"))
         startDate = date.today().strftime("%Y-%m-%dT00:00:00Z")
         endDate = date.today().strftime("%Y-%m-%dT23:59:59Z")
-
-startDate, endDate = get_first_and_last_date_of_month_full(date.today())
+"""
 
 if jsonData["tool"] == "toggl":
     apiManager = TogglApiManager(
