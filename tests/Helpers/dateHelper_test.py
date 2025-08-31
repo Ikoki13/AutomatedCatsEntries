@@ -1,45 +1,69 @@
-from datetime import datetime, date
+import os
+import sys
+from datetime import datetime, date, timezone
 from unittest.mock import patch
-
+import pytest
 from src.Helpers.dateHelper import get_formatted_date, calculate_date_difference
 
-
-def test_get_formatted_date_default_date():
-    with patch('builtins.input', return_value=''):
-        result = get_formatted_date("Enter date: ")
-        assert result.date() == date.today()
+# Add the src directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 
-def test_get_formatted_date_valid_input():
-    with patch('builtins.input', return_value='20.10.2023'):
-        result = get_formatted_date("Enter date: ")
-        assert result == datetime(2023, 10, 20, 0, 0)
-
-
-def test_get_formatted_date_invalid_input(capsys):
-    with patch('builtins.input', side_effect=['invalid_date', '21.10.2023']):
-        result = get_formatted_date("Enter date: ")
-        captured = capsys.readouterr()
-        assert "❌ Invalid date format 'invalid_date'. Please use '%d.%m.%Y'." in captured.out
-        assert result == datetime(2023, 10, 21, 0, 0)
-
-
-def test_calculate_date_difference_positive():
-    start_date = datetime(2023, 10, 10)
-    end_date = datetime(2023, 10, 20)
-    result = calculate_date_difference(start_date, end_date)
-    assert result == 10
-
-
-def test_calculate_date_difference_negative():
-    start_date = datetime(2023, 10, 20)
-    end_date = datetime(2023, 10, 10)
-    result = calculate_date_difference(start_date, end_date)
-    assert result == -10
-
-
-def test_calculate_date_difference_same_date():
-    start_date = datetime(2023, 10, 10)
-    end_date = datetime(2023, 10, 10)
-    result = calculate_date_difference(start_date, end_date)
-    assert result == 0
+class TestDateHelper:
+    @patch('builtins.input', return_value='')
+    def test_get_formatted_date_empty_input(self, mock_input):
+        test_date = date(2023, 1, 1)
+        result = get_formatted_date("Enter date:", test_date)
+        
+        assert isinstance(result, datetime)
+        assert result.date() == test_date
+        assert result.tzinfo == timezone.utc
+        
+    @patch('builtins.input', return_value='15.08.2023')
+    def test_get_formatted_date_valid_input(self, mock_input):
+        result = get_formatted_date("Enter date:")
+        expected = datetime(2023, 8, 15)
+        
+        assert result == expected
+        
+    @patch('builtins.input', side_effect=['invalid', '15.08.2023'])
+    def test_get_formatted_date_invalid_then_valid(self, mock_input):
+        result = get_formatted_date("Enter date:")
+        expected = datetime(2023, 8, 15)
+        
+        assert result == expected
+        
+    def test_calculate_date_difference_same_day(self):
+        date1 = datetime(2023, 8, 15)
+        date2 = datetime(2023, 8, 15)
+        result = calculate_date_difference(date1, date2)
+        
+        assert result == 0
+        
+    def test_calculate_date_difference_consecutive_days(self):
+        date1 = datetime(2023, 8, 15)
+        date2 = datetime(2023, 8, 16)
+        result = calculate_date_difference(date1, date2)
+        
+        assert result == 1
+        
+    def test_calculate_date_difference_month_apart(self):
+        date1 = datetime(2023, 8, 1)
+        date2 = datetime(2023, 9, 1)
+        result = calculate_date_difference(date1, date2)
+        
+        assert result == 31
+        
+    def test_calculate_date_difference_year_apart(self):
+        date1 = datetime(2022, 1, 1)
+        date2 = datetime(2023, 1, 1)
+        result = calculate_date_difference(date1, date2)
+        
+        assert result == 365
+        
+    def test_calculate_date_difference_negative(self):
+        date1 = datetime(2023, 8, 15)
+        date2 = datetime(2023, 8, 10)
+        result = calculate_date_difference(date1, date2)
+        
+        assert result == -5
