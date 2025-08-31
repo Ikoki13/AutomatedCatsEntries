@@ -19,21 +19,26 @@ class TogglApiManager(BaseApiManager):
         self.endDate = endDate
 
     def readTasksForDates(self):
-        print("fetching for {}".format(self.startDate))
-        apiToken = self.token + ":api_token"
+        print("fetching data from {} to {}".format(self.startDate, self.endDate))
 
+        credentials = f"{self.token}:api_token"
+        encoded_credentials = b64encode(credentials.encode("utf-8")).decode("ascii")
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Basic {encoded_credentials}"
+        }
+        params = {
+            "start_date": self.startDate.isoformat(),
+            "end_date": self.endDate.isoformat(),
+        }
         response = requests.get(
-            "https://api.track.toggl.com/api/v9/me/time_entries?start_date={}&end_date={}".format(
-                self.startDate, self.endDate
-            ),
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": "Basic %s"
-                % b64encode(apiToken.encode("utf-8")).decode("ascii")
-            },
+            "https://api.track.toggl.com/api/v9/me/time_entries",
+            headers=headers,
+            params=params
         )
+
         print("fetching successful")
-        if(response.ok):
+        if(response.status_code == 200):
             filteredTaskList = filter(lambda task: task['project_id'] == self.projectId, response.json())
             mergedTasks = self.mergeDuplicatedTasks(filteredTaskList)
 
