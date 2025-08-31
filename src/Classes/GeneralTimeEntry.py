@@ -1,14 +1,18 @@
+from datetime import datetime
+
+
 class GeneralTimeEntry:
     duration = 0
     tags = []
     description = ''
-    def __init__(self, description, duration, tags):
+    def __init__(self, description, duration, tags, entryDate):
         self.description = description
         self.duration = duration
         self.tags = tags
+        self.entryDate = datetime.fromisoformat(entryDate).date()
 
     def __str__(self):
-        print("Description: " + self.description + ", Duration: " + str(self.duration) + ", Tags: " + str(self.tags))
+        print("Description: " + self.description + ", Duration: " + str(self.duration) + ", Tags: " + str(self.tags) + ", EntryDate: " + str(self.entryDate))
 
     def getCatFormat(self):
         description = self.description

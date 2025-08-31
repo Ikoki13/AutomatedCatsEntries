@@ -58,7 +58,7 @@ if jsonData["tool"] == "toggl":
 else:
     print("Given tool in config not supported")
 
-print("reading tasks for today")
+print("reading tasks for given dates")
 filteredTasks = list(apiManager.readTasksForDates())
 print("tasks successfully read - continue mapping")
 generalTimeEntries = apiManager.mapToGeneralTimeEntries(filteredTasks)

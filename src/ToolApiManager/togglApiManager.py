@@ -70,7 +70,7 @@ class TogglApiManager(BaseApiManager):
     def mergeDuplicatedTasks(self, tasks):
         merged_tasks = {}
         for task in tasks:
-            key = (task['description'], tuple(task['tags']))
+            key = (datetime.fromisoformat(task['start']).date(), task['description'], tuple(task['tags']))
             if key in merged_tasks: 
                 merged_tasks[key]['duration'] += task['duration']
                     
@@ -86,6 +86,6 @@ class TogglApiManager(BaseApiManager):
         for e in timeEntryList:
             if e["duration"] >= 0:
                 result.append(
-                    GeneralTimeEntry(e["description"], e["duration"], e["tags"])
+                    GeneralTimeEntry(e["description"], e["duration"], e["tags"], e["start"])
                 )
         return result

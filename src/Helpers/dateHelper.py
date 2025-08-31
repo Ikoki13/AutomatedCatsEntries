@@ -18,7 +18,7 @@ def get_formatted_date(prompt: str, default_date: date = date.today()) -> dateti
 
     date_format = "%d.%m.%Y"
     try:
-        return datetime.strptime(user_input, date_format)
+        return datetime.strptime(user_input, date_format).replace(tzinfo=timezone.utc)
     except ValueError:
         print(f"❌ Invalid date format '{user_input}'. Please use '{date_format}'.")
         return get_formatted_date(prompt, default_date)

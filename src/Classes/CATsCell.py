@@ -1,4 +1,6 @@
 import logging
+from datetime import date
+
 
 class CATsCell:
     maximumNumberOfCharacters = 220
@@ -7,9 +9,10 @@ class CATsCell:
     def __init__(self):
         self.cellText = ''
         self.duration = 0.0
+        self.entryDate = date.today()
 
     def __str__(self):
-        return "Duration:\n" + str(round(self.duration * 4) / 4) + "\nText:\n" + self.cellText
+        return "Date:\n" + str(self.entryDate) + "\nDuration:\n" + str(round(self.duration * 4) / 4) + "\nText:\n" + self.cellText
 
     def addTimeEntry(self, timeEntry):
         result = False
