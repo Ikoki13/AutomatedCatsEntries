@@ -1,4 +1,3 @@
-from Classes import GeneralTimeEntry
 import logging
 
 class CATsCell:

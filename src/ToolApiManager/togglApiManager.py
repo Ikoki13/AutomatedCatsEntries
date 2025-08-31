@@ -3,10 +3,9 @@ from base64 import b64encode
 from datetime import datetime
 
 import requests
-import json
 
-from Classes.GeneralTimeEntry import GeneralTimeEntry
-from ToolApiManager.baseApiManager import BaseApiManager
+from src.Classes.GeneralTimeEntry import GeneralTimeEntry
+from src.ToolApiManager.baseApiManager import BaseApiManager
 
 
 class TogglApiManager(BaseApiManager):
