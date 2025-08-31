@@ -1,8 +1,8 @@
 from datetime import datetime, date
 from unittest.mock import patch
+
 from src.Helpers.dateHelper import get_formatted_date, calculate_date_difference
-import pytest
-import io
+
 
 def test_get_formatted_date_default_date():
     with patch('builtins.input', return_value=''):
