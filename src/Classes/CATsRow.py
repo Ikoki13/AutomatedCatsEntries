@@ -1,4 +1,4 @@
-from Classes.CATsCell import CATsCell
+from src.Classes.CATsCell import CATsCell
 
 class CATsRow:
     def __init__(self, timeEntries):

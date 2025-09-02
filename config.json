@@ -1,8 +1,13 @@
 {
+  "version": "1.0",
   "tool": "toggl",
-  "token": "564280678bc42ea1203e73ce107cb244",
-  "workspaceId": "7596813",
-  "projectId": "195060378",
+  "token": "bb1d364bc0b2eacb2b2455e7d67202e6",
+  "workspaceId": "1329930",
+  "projectId": "210175312",
   "browser": "chrome",
-  "leistungsart": "BXACIB"
+  "leistungsart": "BXACIB",
+  "outputFormat": {
+    "maxLength": 255,
+    "exportFormat": "Excel | CATs | PowerApp"
+  }
 }
